@@ -1,32 +1,33 @@
 def main():
-
-    with open('input.txt') as f:
-
-        input = f.readlines()
-        f.close()
-    res = [eval(i) for i in input]
-    ex = [199, 200, 208, 210, 200, 207, 240, 269, 260, 263]
-
-    numInc = 0
+    arr = []
+    idx = 0
     prev = 0
-    for idx, x in enumerate(res):
-        if idx+2 >= len(res):
-            break
+    numInc = 0
+    val = 0
+    with open('input.txt') as f:
+        input = f.readline()
+        while input:
+            arr.append(int(input))
+            if idx == 2:
+                val = arr[idx] + arr[idx-1] + arr[idx-2]
+                print(f'{val} (N/A - no previous measurement)')
+                prev = val
+            if idx > 2:
+                val = arr[idx] + arr[idx-1] + arr[idx-2]
+                if val > prev:
+                    print(f'{val} (increase)')
+                    numInc += 1
+                elif val == prev:
+                    print(f'{val} (no change)')
+                else:
+                    print(f'{val} (decrease)')
 
-        val = x + res[idx+1] + res[idx+2]
-        if (idx == 0):
-            print(f'{val} (N/A - no previous measurement)')
-            prev = val
-            continue
-        if val > prev:
-            print(f'{val} (increase)')
-            numInc += 1
-        elif val == prev:
-            print(f'{val} (no change)')
-        else:
-            print(f'{val} (decrease)')
-        prev = val
+                prev = val
 
+            idx += 1
+            input = f.readline()
+
+        f.close()
     print(f'{numInc} increases')
 
 
