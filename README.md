@@ -11,4 +11,4 @@
 | Day 1               | 2 Stars | Python   |
 | Day 2               | 2 Stars | Python   |
 
-[Get inputs API](https://github.com/AlexeSimon/adventofcode)
+[Get inputs API](https://github.com/alvesvaren/AoC-template)
