@@ -4,7 +4,7 @@
 
 | Advent of Code 2022 | Stars   | Language |
 | ------------------- | ------- | -------- |
-| Day 1               | ? Stars | Python   |
+| Day 1               | 2 Stars | Python   |
 
 | Advent of Code 2021 | Stars   | Language |
 | ------------------- | ------- | -------- |
