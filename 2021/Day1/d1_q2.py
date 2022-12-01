@@ -1,4 +1,6 @@
 '''Submission for day 1 question 2'''
+
+
 def main():
     '''3's sum submarine'''
 
