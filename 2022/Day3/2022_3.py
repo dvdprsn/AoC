@@ -10,11 +10,11 @@ for line in data:
     group.append(line)
     value = 0 
     count += 1
-    
+
     # Have grouping
     if count >= 3:
         st = ""
-        for i, char in enumerate(line):
+        for char in line:
             if char in st:
                 continue
             if char in group[0] and char in group[1]:
