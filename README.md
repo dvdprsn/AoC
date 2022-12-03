@@ -6,6 +6,8 @@
 | ------------------- | ------- | -------- |
 | Day 1               | 2 Stars | Python & bash   |
 | Day 2               | 2 Stars | Python |
+| Day 3               | 2 Stars | Python |
+
 
 
 | Advent of Code 2021 | Stars   | Language |
