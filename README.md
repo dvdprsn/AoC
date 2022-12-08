@@ -10,6 +10,9 @@
 | Day 4               | 2 Stars | Python        |
 | Day 5               | 2 Stars | Python        |
 | Day 6               | 2 Stars | Python        |
+| Day 7               | 2 Stars | Python        |
+| Day 8               | 2 Stars | Python        |
+
 
 | Advent of Code 2021 | Stars   | Language |
 | ------------------- | ------- | -------- |
