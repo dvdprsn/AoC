@@ -1,164 +1,58 @@
 import sys
 import math
+from operator import add, mul, pow
 sys.path.append("../../")
 from aoc import get_input
-
 data = get_input(11).splitlines()
-# What a terrible way to hardcode a solution....
-# But, it works!
-class M0:
-    def __init__(self):
-        self.items = [93, 54, 69, 66, 71]
+
+class Monkey:
+    def __init__(self, item_list, op, op_value, div, true_m, false_m):
+        self.items = item_list
+        self.op = op
         self.number_inspections = 0
+        self.div_by = div
+        self.true_m = true_m
+        self.false_m = false_m
+        self.op_value = op_value
 
-    def operation(self, old_worry):
-        return old_worry * 3
+    def magic(self, old):
+        return self.op(old, self.op_value)
 
-    def test(self, worry):
-        if worry % 7 == 0:
-            return 7
+    def test(self, value):
+        if value % self.div_by == 0:
+            return self.true_m
         else:
-            return 1
+            return self.false_m
 
-
-class M1:
-    def __init__(self):
-        self.items = [89, 51, 80, 66]
-        self.number_inspections = 0
-    def operation(self, old_worry):
-        return old_worry * 17
-
-    def test(self, worry):
-        if worry % 19 == 0:
-            return 5
-        else:
-            return 7
-
-
-class M2:
-    def __init__(self):
-        self.items = [90, 92, 63, 91, 96, 63, 64]
-        self.number_inspections = 0
-    def operation(self, old_worry):
-        return old_worry + 1
-
-    def test(self, worry):
-        if worry % 13 == 0:
-            return 4
-        else:
-            return 3
-
-
-class M3:
-    def __init__(self):
-        self.items = [65, 77]
-        self.number_inspections = 0
-    def operation(self, old_worry):
-        return old_worry + 2
-
-    def test(self, worry):
-        if worry % 3 == 0:
-            return 4
-        else:
-            return 6
-
-
-class M4:
-    def __init__(self):
-        self.items = [76, 68, 94]
-        self.number_inspections = 0
-    def operation(self, old_worry):
-        return old_worry * old_worry
-
-    def test(self, worry):
-        if worry % 2 == 0:
-            return 0
-        else:
-            return 6
-
-
-class M5:
-    def __init__(self):
-        self.items = [86, 65, 66, 97, 73, 83]
-        self.number_inspections = 0
-    def operation(self, old_worry):
-        return old_worry + 8
-
-    def test(self, worry):
-        if worry % 11 == 0:
-            return 2
-        else:
-            return 3
-
-
-class M6:
-    def __init__(self):
-        self.items = [78]
-        self.number_inspections = 0
-    def operation(self, old_worry):
-        return old_worry + 6
-
-    def test(self, worry):
-        if worry % 17 == 0:
-            return 0
-        else:
-            return 1
-
-
-class M7:
-    def __init__(self):
-        self.items = [89, 57, 59, 61, 87, 55, 55, 88]
-        self.number_inspections = 0
-    def operation(self, old_worry):
-        return old_worry + 7
-
-    def test(self, worry):
-        if worry % 5 == 0:
-            return 2
-        else:
-            return 5
-        
-round_number = 1
- 
 monkeys = []
-monkeys.append(M0())
-monkeys.append(M1())
-monkeys.append(M2())
-monkeys.append(M3())
-monkeys.append(M4())
-monkeys.append(M5())
-monkeys.append(M6())
-monkeys.append(M7())
-# Need to find a common divisor to reduce
-# Luckly these are all primes
-divs = [7, 19, 13, 3, 2, 11, 17, 5]
-lcm = math.lcm(*divs)
+monkeys.append(Monkey([93, 54, 69, 66, 71], mul, 3, 7, 7, 1))
+monkeys.append(Monkey([89, 51, 80, 66], mul, 17, 19, 5, 7))
+monkeys.append(Monkey([90, 92, 63, 91, 96, 63, 64], add, 1, 13, 4, 3))
+monkeys.append(Monkey([65, 77], add, 2, 3, 4, 6))
+monkeys.append(Monkey([76, 68, 94], pow, 2, 2, 0, 6))
+monkeys.append(Monkey([86, 65, 66, 97, 73, 83], add, 8, 11, 2, 3))
+monkeys.append(Monkey([78], add, 6, 17, 0, 1))
+monkeys.append(Monkey([89, 57, 59, 61, 87, 55, 55, 88], add, 7, 5, 2, 5))
 
+# Need to find a common divisor to reduce
+lcm = math.lcm(*[7, 19, 13, 3, 2, 11, 17, 5])
+# Part 2
+round_number = 1
 while round_number <= 10000:
     for i in range(0, 8):
         # monkey selects item to inspect
         monkey = monkeys[i]
-        for y in monkey.items.copy():
-            # print(y)
-            original = y
+        for item in monkey.items.copy():
             monkey.number_inspections += 1
             # monkey inspects item
-            y = monkey.operation(y)
-            # worry level decreases
-            # y = y/3
-            # Test where to throw
-            throw = monkey.test(y)
-            # throw to next monkey
-            monkeys[throw].items.append(y % lcm)
-            monkey.items.remove(original)
+            altered_item = monkey.magic(item)
+            # Monkey throws item after testing
+            monkeys[monkey.test(altered_item)].items.append(altered_item % lcm)
+            monkey.items.remove(item)
     round_number += 1
 
-largest = []
-for i in range(0,8):
-    largest.append(monkeys[i].number_inspections)
-    print(f"Monkey {i} inspected {monkeys[i].number_inspections} times")
-
-max1 = max(largest)
-largest.remove(max1)
-max2 = max(largest)
-print(max1*max2)
+res = []
+for i in range(0, 8):
+    res.append(monkeys[i].number_inspections)
+res.sort(reverse=True)
+print(f"Part 2: {res[0] * res[1]}")

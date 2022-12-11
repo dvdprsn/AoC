@@ -14,6 +14,7 @@
 | Day 8               | 2 Stars | Python        |
 | Day 9               | 2 Stars | Python        |
 | Day 10              | 2 Stars | Python        |
+| Day 11              | 2 Stars | Python        |
 
 
 
